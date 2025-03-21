@@ -1,33 +1,29 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enviar para Google Sheets</title>
 </head>
+
 <body>
-    <form id="messageForm">
-        <input type="text" id="messageInput" placeholder="Digite sua mensagem" required>
-        <button type="submit">Enviar</button>
-    </form>
+    <input type="text" id="mensagem" placeholder="Digite sua mensagem">
+    <button onclick="enviarMensagem()">Enviar</button>
 
     <script>
-        document.getElementById("messageForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-            var message = document.getElementById("messageInput").value;
-            
-            fetch("SUA_URL_DO_APPS_SCRIPT", {
+        function enviarMensagem() {
+            var mensagem = document.getElementById("mensagem").value;
+
+            fetch("SUA_URL_DO_WEB_APP", {
                 method: "POST",
+                mode: "no-cors", // Para evitar problemas de CORS
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ message: message })
-            })
-            .then(response => response.text())
-            .then(data => {
-                alert("Mensagem enviada com sucesso!");
-                document.getElementById("messageInput").value = "";
-            })
-            .catch(error => console.error("Erro:", error));
-        });
+                body: JSON.stringify({ mensagem: mensagem })
+            }).then(() => alert("Mensagem enviada!"));
+        }
     </script>
+
 </body>
+
 </html>
