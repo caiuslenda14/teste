@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enviar para Google Sheets</title>
+</head>
+<body>
+    <form id="messageForm">
+        <input type="text" id="messageInput" placeholder="Digite sua mensagem" required>
+        <button type="submit">Enviar</button>
+    </form>
+
+    <script>
+        document.getElementById("messageForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            var message = document.getElementById("messageInput").value;
+            
+            fetch("SUA_URL_DO_APPS_SCRIPT", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: message })
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert("Mensagem enviada com sucesso!");
+                document.getElementById("messageInput").value = "";
+            })
+            .catch(error => console.error("Erro:", error));
+        });
+    </script>
+</body>
+</html>
